@@ -5,7 +5,7 @@ from common.tk_drawer import TkDrawer, x, y
 import sys
 try:
     exec(f'from optimize_{sys.argv[1]}.polyedr import Polyedr')
-except(IndexError, ModuleNotFoundError):
+except (IndexError, ModuleNotFoundError):
     print("\nНеобходимо указание варианта оптимизации от 1 до 7, например,\n"
           "    ./run_optimize 1\n"
           "или\n"

@@ -7,7 +7,8 @@ from shadow.mod_polyedr import Polyedr
 
 tk = TkDrawer()
 try:
-    for name in ["prism", "holey_box", "ccc", "cube", "box", "king", "cow"]:
+    for name in ["prism", "new_cube", "octahedron",
+                 "holey_box", "ccc", "cube", "box", "king", "cow"]:
         print("=============================================================")
         print(f"Начало работы с полиэдром '{name}'")
         start_time = time()
@@ -16,8 +17,8 @@ try:
         poly.draw(tk)
         delta_time = time() - start_time
         print(f"Изображение полиэдра '{name}' заняло {delta_time} сек.")
-        print(f"Cумма длин проекций указанных рёбер: {round(poly.find_mod_par(), 3)}")
-        poly.find_projection_angle()
+        print(f"Cумма длин проекций указанных рёбер: "
+              f"{round(poly.find_mod_par(), 3)}")
         input("Hit 'Return' to continue -> ")
 except (EOFError, KeyboardInterrupt):
     print("\nStop")

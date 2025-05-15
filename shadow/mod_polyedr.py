@@ -67,7 +67,7 @@ class Edge:
             s for s in reduce(add, gaps, []) if not s.is_degenerate()]
 
     # Преобразование одномерных координат в трёхмерные
-    def r3(self, t):
+    def r3(self, t):    # pragma: no cover
         return self.beg * (Edge.SFIN - t) + self.fin * t
 
     # Пересечение ребра с полупространством, задаваемым точкой (a)
@@ -205,17 +205,3 @@ class Polyedr:
                 if e.h_angle() < pi / 7 and not e.center_in_unit_cube():
                     self._mod_par += e.projection()
         return self._mod_par
-
-    def find_projection_angle(self):
-        arr = []
-        for e in self.edges:
-            # arr.append((e.beg.__dict__, e.fin.__dict__, e.h_angle(), e.projection()))
-            arr.append((e.h_angle(), not e.center_in_unit_cube(), len(e.gaps), e.projection()))
-        print(arr)
-        a = [arr[i] for i in range(len(arr)) if arr[i][0] < pi/7]
-        print(a)
-        b = [a[i] for i in range(len(a)) if a[i][1]]
-        print(b)
-        c = [b[i] for i in range(len(b)) if b[i][2] == 0]
-        print(c)
-        print(sum(i[3] for i in c))
