@@ -76,12 +76,12 @@ class TestModPolyedr(unittest.TestCase):
     # горизонтальное длины 200 под углом 0 градусов с центром вне ед. куба
     def test_first_mod_par(self):
         self.first_poly.shadow()
-        self.assertEqual(self.first_poly.find_mod_par(), 200.0)
+        self.assertEqual(round(self.first_poly.find_mod_par(), 1), 1.0)
 
     def test_second_mod_par(self):
         self.second_poly.shadow()
-        self.assertEqual(round(self.second_poly.find_mod_par(), 3), 373.927)
+        self.assertEqual(round(self.second_poly.find_mod_par(), 1), 0.0)
 
     def test_third_mod_par(self):
         self.third_poly.shadow()
-        self.assertEqual(round(self.third_poly.find_mod_par(), 2), 836.56)
+        self.assertEqual(round(self.third_poly.find_mod_par(), 2), 1.41)

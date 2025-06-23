@@ -143,6 +143,8 @@ class Polyedr:
         # списки вершин, рёбер и граней полиэдра
         self.vertexes, self.edges, self.facets = [], [], []
         self._mod_par = 0.0
+        self.c = 0.0
+        self.alpha, self.beta, self.gamma = 0.0, 0.0, 0.0
 
         # список строк файла
         with open(file) as f:
@@ -152,8 +154,10 @@ class Polyedr:
                     buf = line.split()
                     # коэффициент гомотетии
                     c = float(buf.pop(0))
+                    self.c = c
                     # углы Эйлера, определяющие вращение
                     alpha, beta, gamma = (float(x) * pi / 180.0 for x in buf)
+                    self.alpha, self.beta, self.gamma = alpha, beta, gamma
                 elif i == 1:
                     # во второй строке число вершин, граней и рёбер полиэдра
                     nv, nf, ne = (int(x) for x in line.split())
@@ -183,6 +187,12 @@ class Polyedr:
                 edges[(e.beg, e.fin)] = e
         self.edges = list(edges.values())
 
+    # обратное преобразование координат вершин
+    def inv_trans(self, v):
+        v *= 1/self.c
+        v = v.rz(-self.gamma).ry(-self.beta).rz(-self.alpha)
+        return v
+
     # Нахождение "просветов"
     def shadow(self):
         self.edges_uniq()
@@ -202,6 +212,7 @@ class Polyedr:
     def find_mod_par(self):
         for e in self.edges:
             if len(e.gaps) == 0:
+                e = Edge(self.inv_trans(e.beg), self.inv_trans(e.fin))
                 if e.h_angle() < pi / 7 and not e.center_in_unit_cube():
                     self._mod_par += e.projection()
         return self._mod_par
